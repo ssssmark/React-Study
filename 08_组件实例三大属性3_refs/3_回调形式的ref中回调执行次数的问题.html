@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--准备容器-->
+<div id="test1"></div>
+<div id="test2"></div>
+<!--引入react核心库-->
+<script type="text/javascript" src="../libs/react/react.development.js"></script>
+<!--引入react-dom用于支持react操作dom-->
+<script type="text/javascript" src="../libs/react/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转换为js-->
+<script type="text/javascript" src="../libs/babel/babel.min.js"></script>
+<script src="https://cdn.staticfile.org/prop-types/15.6.1/prop-types.js"></script>
+</body>
+<script type="text/babel">
+  class Demo extends React.Component{
+    state={
+      isHot:true
+    }
+   showinfo=()=>{
+     const info=this.input1.value
+     alert(info)
+   }
+   changeweather=()=>{
+   //    获取原来状态
+     const {isHot}=this.state
+     this.setState({isHot: !isHot})
+   }
+   saveinput=(c)=>{
+       this.input1=c;
+       console.log('@',currentNode);
+   }
+
+    render(){
+     const {isHot}=this.state
+     return(
+             <div>
+               <h2>今天天气很{isHot? '炎热':'凉爽'}</h2>
+                 {/*<input ref={(currentNode)=>{this.input1=currentNode;console.log('@',currentNode)}}type="text"/><br/><br/>*/}
+                 <input ref={this.saveinput} type="text"/><br/><br/>
+               <button onClick={this.showinfo}>点我提示输入的数据</button>
+               <button onClick={this.changeweather}>点我改变天气</button>
+             </div>
+     )
+    }
+  }
+  ReactDOM.render(<Demo/>,document.getElementById("test1"))
+//   更新过程中ref回调函数会调用两次
+</script>
+</html>

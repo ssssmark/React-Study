@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--准备容器-->
+<div id="test1"></div>
+<div id="test2"></div>
+<!--引入react核心库-->
+<script type="text/javascript" src="../libs/react/react.development.js"></script>
+<!--引入react-dom用于支持react操作dom-->
+<script type="text/javascript" src="../libs/react/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转换为js-->
+<script type="text/javascript" src="../libs/babel/babel.min.js"></script>
+<script src="https://cdn.staticfile.org/prop-types/15.6.1/prop-types.js"></script>
+<script type="text/babel">
+  class Life extends React.Component{
+    state={
+      opacity:1
+    }
+    //卸载容器里的组件
+    death=()=>{
+
+      ReactDOM.unmountComponentAtNode(document.getElementById('test1'))
+    }
+    componentDidMount()//跟render同级，组件挂载完毕时调用
+    {
+      this.timer=setInterval(()=>{
+        //获取原来状态
+        let {opacity}=this.state
+        opacity-=0.1
+        if(opacity <= 0)
+          opacity=1
+        //更新状态
+        this.setState({
+          opacity: opacity
+        })
+      },200);
+    }
+    componentWillUnmount(){//组件将要卸载
+        //清除定时器
+        clearInterval(this.timer)
+    }
+    //render调用的时机：1.初始化渲染 2.状态更新
+    render()
+    {
+
+      return(
+              <div>
+                <h2 style={{opacity:this.state.opacity}}>React学不会怎么办</h2>
+                <button onClick={this.death}>不活了</button>
+              </div>
+      )
+    }
+  }
+  ReactDOM.render(<Life/>,document.getElementById('test1'))
+</script>
+</body>
+</html>

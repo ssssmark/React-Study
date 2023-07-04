@@ -21,12 +21,16 @@
       //初始化状态
       this.state={
         isHot:false,
-      }//要求写成一个对象
+      }//要求写成一个对象,state是私有的，只能在组件内部拿到数据
     }
     render(){
       console.log(this)
       //注意react如何绑定事件
-      return <h1 onClick={demo}>今天天气很{this.state.isHot?'炎热':'凉爽'}</h1>
+      return <h1 onClick={this.changeWeather()}>今天天气很{this.state.isHot?'炎热':'凉爽'}</h1>
+    }
+    changeWeather(){
+      //changeWeather放在Weather的实例对象中
+      console.log(1)
     }
   }
   //2.渲染组件到页面
